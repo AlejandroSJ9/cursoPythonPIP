@@ -1,12 +1,19 @@
 import read_csv as file
 import charts
+import pandas as pd
 
 def data_country(country):
-  data = file.read_csv('./data.csv')
-  return list(filter(lambda x: x['Country/Territory'].capitalize() == country.capitalize(), data))
+    '''
+    data = file.read_csv('./data.csv')
+    return list(filter(lambda x: x['Country/Territory'].capitalize() == country.capitalize(), data))
+    '''
+    df = pd.read_csv('data.csv')
+    filtered_data = df[df['Country/Territory'].str.capitalize() == country.capitalize()]
+    country_dict = filtered_data.iloc[0].to_dict()
+    return country_dict
+    
 
-def clean(country_dict):
-  dict = country_dict[0]
+def clean(dict):
   population_dict = {
     '2022': int(dict['2022 Population']),
     '2020': int(dict['2020 Population']),
